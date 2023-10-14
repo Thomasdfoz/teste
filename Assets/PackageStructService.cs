@@ -6,11 +6,9 @@ using UnityEngine;
 using PackageInfo = PackageManager.Data.PackageInfo;
 public class PackageStructService : MonoBehaviour
 {
-    [MenuItem("Custom/Create Package")]
-    public static async void CreateStructToPackage()
+    public static async void CreateStructToPackage(string packageName)
     {
-        string namePackage = "Teste";
-        string moduleFolder = Path.Combine(Application.dataPath, namePackage);
+        string moduleFolder = Path.Combine(Application.dataPath, packageName);
 
         if (!Directory.Exists(moduleFolder))
         {
@@ -28,9 +26,9 @@ public class PackageStructService : MonoBehaviour
 
             PackageInfo packageInfo = new PackageInfo
             {
-                name = $"com.vrglass.{namePackage.Replace(" ", "").ToLower()}",
+                name = $"com.vrglass.{packageName.Replace(" ", "").ToLower()}",
                 version = "0.0.1",
-                displayName = $"{namePackage}",
+                displayName = $"{packageName}",
                 description = "...",
                 unity = "2021.3",
                 unityRelease = "8f1",
@@ -54,7 +52,7 @@ public class PackageStructService : MonoBehaviour
             string scriptsFolder = Path.Combine(moduleFolder, "Scripts");
             Directory.CreateDirectory(scriptsFolder);
 
-            GitHubUploader gitHub = new GitHubUploader("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", "Thomasdfoz", namePackage, moduleFolder);
+            GitHubUploader gitHub = new GitHubUploader("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", "Thomasdfoz", packageName, moduleFolder);
 
             await gitHub.UploadModuleToGitHubAsync();
 
